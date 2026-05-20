@@ -1470,58 +1470,6 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-clear-all').addEventListener('click', clearAll);
 
   updateFab();
-
-
-
-
-function copySchema() {
-  // Extract only the JSON between the script tags — strip the wrapper
-  var el = document.querySelector('.schema-block');
-  var raw = el.innerHTML
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&amp;/g, '&')
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'");
-
-  // Remove the <script type="application/ld+json"> wrapper and <\/script> — copy only the JSON
-  raw = raw.replace(/<script[^>]*>/i, '').replace(/<\/script>/i, '').trim();
-
-  var lbl = document.getElementById('copy-label');
-  var icn = document.getElementById('copy-icon');
-  var btn = document.getElementById('copy-schema-btn');
-
-  function ok() {
-    btn.classList.add('copied');
-    lbl.textContent = 'Copied!';
-    icn.textContent = '✓';
-    setTimeout(function() {
-      btn.classList.remove('copied');
-      lbl.textContent = 'Copy Schema';
-      icn.textContent = '⧉';
-    }, 2500);
-  }
-  function fail() {
-    lbl.textContent = 'Select text manually';
-    setTimeout(function() { lbl.textContent = 'Copy Schema'; }, 3000);
-  }
-
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(raw).then(ok).catch(function() {
-      var t = document.createElement('textarea');
-      t.value = raw; t.style.cssText = 'position:fixed;opacity:0';
-      document.body.appendChild(t); t.select();
-      try { document.execCommand('copy'); ok(); } catch(e) { fail(); }
-      document.body.removeChild(t);
-    });
-  } else {
-    var t = document.createElement('textarea');
-    t.value = raw; t.style.cssText = 'position:fixed;opacity:0';
-    document.body.appendChild(t); t.select();
-    try { document.execCommand('copy'); ok(); } catch(e) { fail(); }
-    document.body.removeChild(t);
-  }
-}
 });
 
 // ── COPY SCHEMA — reads from hidden store to avoid <\/script> parsing issues ──
