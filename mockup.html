@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Presentation Maker | Create Slides & Decks in Minutes — Optimized Mockup</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: #fff; color: #111; font-size: 15px; line-height: 1.6; }
+.page { max-width: 1100px; margin: 0 auto; }
+section { padding: 72px 80px; border-bottom: 1px solid #e5e5e5; }
+nav { border-bottom: 1px solid #e5e5e5; padding: 16px 80px; display: flex; align-items: center; justify-content: space-between; max-width: 1100px; margin: 0 auto; }
+.nav-logo { font-size: 17px; font-weight: 700; }
+.nav-links { display: flex; gap: 28px; font-size: 13px; color: #555; }
+.nav-ctas { display: flex; gap: 10px; }
+.btn { font-family: inherit; font-size: 13px; font-weight: 600; padding: 7px 18px; border-radius: 6px; border: 1.5px solid #ccc; background: transparent; cursor: pointer; }
+.btn-dark { background: #111; color: #fff; border-color: #111; }
+.section-tag { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; margin-bottom: 14px; }
+.tag-opt  { background: #f0e6ff; color: #6a0dad; border: 1px solid #d4b0ff; }
+.tag-new  { background: #e6f9ee; color: #1a7a3a; border: 1px solid #90dba8; }
+.tag-same { background: #f0f0f0; color: #666;    border: 1px solid #ddd; }
+h1 { font-size: 44px; font-weight: 700; line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 20px; }
+h2 { font-size: 32px; font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 16px; }
+h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+h4 { font-size: 13px; font-weight: 700; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.06em; color: #555; }
+p { color: #333; margin-bottom: 12px; }
+p:last-child { margin-bottom: 0; }
+.subhead { font-size: 17px; color: #444; max-width: 600px; line-height: 1.65; margin-bottom: 32px; }
+.overline { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #888; margin-bottom: 12px; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
+.two-col-wide { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.placeholder { background: #f5f5f5; border: 1.5px dashed #ccc; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #999; font-style: italic; text-align: center; padding: 16px; }
+.placeholder-video { aspect-ratio: 16/10; }
+.placeholder-img { aspect-ratio: 4/3; }
+.placeholder-logo { height: 28px; width: 80px; border-radius: 4px; }
+.card { border: 1.5px solid #e5e5e5; border-radius: 10px; padding: 24px; }
+.card h3 { font-size: 16px; }
+.card p { font-size: 14px; color: #444; }
+.btn-lg { font-family: inherit; font-size: 15px; font-weight: 600; padding: 12px 28px; border-radius: 7px; border: 1.5px solid #111; background: #111; color: #fff; cursor: pointer; margin-right: 12px; }
+.btn-lg-ghost { font-family: inherit; font-size: 15px; font-weight: 600; padding: 12px 28px; border-radius: 7px; border: 1.5px solid #ccc; background: transparent; color: #111; cursor: pointer; }
+.logo-strip { display: flex; gap: 32px; flex-wrap: wrap; align-items: center; margin-top: 24px; }
+.tab-nav { display: flex; gap: 0; border-bottom: 1.5px solid #e5e5e5; margin-bottom: 32px; }
+.tab-item { font-size: 14px; font-weight: 600; padding: 10px 20px; border-bottom: 2px solid transparent; cursor: pointer; color: #555; margin-bottom: -1.5px; }
+.tab-item.active { border-bottom-color: #111; color: #111; }
+.testimonial { border: 1.5px solid #e5e5e5; border-radius: 10px; padding: 22px; font-size: 14px; }
+.testimonial p { font-style: italic; color: #333; margin-bottom: 10px; }
+.testimonial-meta { font-size: 12px; font-weight: 600; color: #888; }
+.faq-item { border-bottom: 1px solid #e5e5e5; padding: 20px 0; }
+.faq-item:first-child { border-top: 1px solid #e5e5e5; }
+.faq-q { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+.faq-a { font-size: 14px; color: #444; line-height: 1.7; }
+.step-card { border: 1.5px solid #e5e5e5; border-radius: 10px; padding: 24px; }
+.step-num { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #888; margin-bottom: 10px; }
+.opt-pill { display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 7px; border-radius: 999px; vertical-align: middle; margin-left: 6px; position: relative; top: -1px; }
+.opt-pill.opt { background: #f0e6ff; color: #6a0dad; border: 1px solid #d4b0ff; }
+.opt-pill.new { background: #e6f9ee; color: #1a7a3a; border: 1px solid #90dba8; }
+.callout { border: 1.5px solid #ffc107; background: #fffbea; border-radius: 8px; padding: 14px 18px; font-size: 13px; color: #5a4400; line-height: 1.6; }
+</style>
+</head>
+<body>
+<!-- ── CLIENT NAV ── -->
+<div style="position:sticky;top:0;z-index:9999;background:#1C1C1E;padding:10px 32px;display:flex;align-items:center;gap:16px;font-family:'Raleway',sans-serif;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.08);">
+  <svg width="28" height="28" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0;">
+  <rect x="1" y="1" width="78" height="78" rx="9" fill="url(#nav-icon-grad)"/>
+  <rect x="1" y="1" width="78" height="78" rx="9" stroke="#232323" stroke-width="2"/>
+  <path d="M57.875 20.0347C57.875 20.0347 34.659 55.5902 27.0008 55.5902C19.3426 55.5902 29.2975 33.7213 41.2151 33.7213C52.4402 33.7213 27.0666 55.5902 36.5631 55.5902C42.1563 55.5902 51.2626 43.146 51.2626 43.146" stroke="#232323" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <defs>
+    <linearGradient id="nav-icon-grad" x1="0" y1="40" x2="80" y2="40" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#C3F2D0"/>
+      <stop offset="0.53" stop-color="#B3EAFF"/>
+      <stop offset="1" stop-color="#FEE3CC"/>
+    </linearGradient>
+  </defs>
+</svg>
+  <span style="color:rgba(255,255,255,0.15);">|</span>
+  <a href="/" style="color:rgba(255,255,255,0.5);text-decoration:none;font-weight:600;" onmouseover="this.style.color='#C3F2D0'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">&#x2190; Optimization Draft</a>
+  <span style="color:#fff;font-weight:700;">Mockup</span>
+</div>
+
+<div class="page">
+
+<nav>
+  <div class="nav-logo">beautiful.ai</div>
+  <div class="nav-links">
+    <span>Product</span><span>Solutions</span><span>Templates</span>
+    <span>Pricing</span><span>Enterprise</span><span>Resources</span>
+  </div>
+  <div class="nav-ctas">
+    <button class="btn">Login</button>
+    <button class="btn btn-dark">Get started</button>
+  </div>
+</nav>
+
+<div style="padding:16px 80px;border-bottom:1px solid #e5e5e5;">
+  <div class="callout">
+    <strong>Client flag: Cannibalization risk.</strong> The homepage (beautiful.ai) has historically targeted "ai presentation maker," potentially splitting authority with this page. A canonical tag review and internal linking audit is recommended alongside this on-page work.
+  </div>
+</div>
+
+<!-- HERO -->
+<section>
+  <div class="two-col">
+    <div>
+      <div class="section-tag tag-opt">Optimized</div>
+      <h1>The AI Presentation Maker that means business <span class="opt-pill opt">H1</span></h1>
+      <p class="subhead">Beautiful.ai is the AI presentation maker built for how professionals actually work. Move from prompt to polished deck faster, with less rework, fewer edits, and designer-quality slides with the content you intended. <span class="opt-pill opt">Para</span></p>
+      <button class="btn-lg">Start a free trial</button>
+      <button class="btn-lg-ghost">Schedule a demo</button>
+    </div>
+    <div class="placeholder placeholder-video">[Hero video / animation]</div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section style="padding:40px 80px;">
+  <div class="section-tag tag-same">Unchanged</div>
+  <p class="overline" style="margin-bottom:20px;">The only AI presentation platform trusted by enterprises.</p>
+  <div class="logo-strip">
+    <div class="placeholder placeholder-logo">[ebay]</div>
+    <div class="placeholder placeholder-logo">[Salesforce]</div>
+    <div class="placeholder placeholder-logo">[Google]</div>
+    <div class="placeholder placeholder-logo">[HP]</div>
+    <div class="placeholder placeholder-logo">[Jostens]</div>
+    <div class="placeholder placeholder-logo">[Phoenix Suns]</div>
+  </div>
+</section>
+
+<!-- NEW: WHAT IS -->
+<section>
+  <div class="section-tag tag-new">New Section</div>
+  <h2>What Is an AI Presentation Maker? <span class="opt-pill new">New</span></h2>
+  <p style="font-size:17px;color:#333;max-width:720px;margin-bottom:16px;">An <strong>AI presentation maker</strong> is a tool that uses artificial intelligence to generate professional slide decks from a text prompt, document, or outline. You describe what you need, and the AI handles structure, layout, and design, giving you a polished starting point in minutes rather than hours.</p>
+  <p style="font-size:17px;color:#333;max-width:720px;">Most <strong>AI presentation generators</strong> produce a finished deck in one shot. Beautiful.ai works differently: the AI walks you through the process in stages (prompt, outline review, then design) so the final result reflects what you actually intended. Smart Slides then handle the formatting automatically as you edit.</p>
+</section>
+
+<!-- NEW: HOW IT WORKS -->
+<section>
+  <div class="section-tag tag-new">New Section</div>
+  <h2>How to Use Beautiful.ai's AI Presentation Maker <span class="opt-pill new">New</span></h2>
+  <p class="subhead" style="margin-bottom:40px;">Three stages. No guesswork. No one-shot surprises.</p>
+  <div class="three-col">
+    <div class="step-card">
+      <div class="step-num">Step 1</div>
+      <h3>Start with a prompt, outline, or document</h3>
+      <p>Type a description of your presentation, paste an existing outline, or upload a document. Beautiful.ai reads your input and structures the content into a logical flow.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">Step 2</div>
+      <h3>Review and shape the outline</h3>
+      <p>Before any slides are designed, you see a slide-by-slide outline. Edit, reorder, or add topics. This is what separates our <strong>AI presentation maker</strong> from one-shot generators: you stay in control before the design begins.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">Step 3</div>
+      <h3>Generate and refine</h3>
+      <p>Once approved, Beautiful.ai generates the full deck. Smart Slides auto-format every layout. Edit any slide, regenerate images, or add a new <strong>AI-generated PowerPoint</strong>-compatible slide in seconds.</p>
+    </div>
+  </div>
+  <p style="margin-top:24px;font-size:14px;color:#555;border-top:1px solid #e5e5e5;padding-top:20px;">Export to PowerPoint, PDF, or share a live link. Every deck is ready to deliver in the format your audience expects.</p>
+</section>
+
+<!-- TABS: CREATE WITH AI -->
+<section>
+  <div class="section-tag tag-same">Unchanged (Tab 1 description optimized)</div>
+  <h2>Create with AI, refine with Smart Slides</h2>
+  <p class="subhead">Start with a prompt, end with professional presentations you'll be proud to share.</p>
+  <div class="tab-nav">
+    <div class="tab-item active">Draft in stages</div>
+    <div class="tab-item">Edit at superspeed</div>
+    <div class="tab-item">Explore &amp; add</div>
+  </div>
+  <div class="two-col">
+    <div class="placeholder placeholder-video">[Tab video / animation]</div>
+    <div>
+      <h3>Draft in stages</h3>
+      <p>Start from a long or short prompt, shape the outline first, then generate polished slides. Our Create with AI <strong>presentation generator</strong> is a guided workflow, not a one-shot tool. <span class="opt-pill opt">Optimized</span></p>
+      <p style="margin-top:16px;font-size:13px;color:#888;">Tab 2 — Unchanged: Smart Slides are intelligent layouts that realign, resize, and animate your content automatically. You focus on the story, Smart Slides handle the formatting.</p>
+      <p style="font-size:13px;color:#888;margin-top:8px;">Tab 3 — Unchanged: Preview over 300 designer slide layouts, or generate fresh AI slides on the fly. Smart Slides keep your content aligned, on-brand, and beautiful.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES GRID -->
+<section>
+  <div class="section-tag tag-opt">Optimized</div>
+  <h2>Discover AI that fits every step of your presentation workflow</h2>
+  <p class="subhead">Whether you need a full <strong>AI presentation maker</strong> or a targeted <strong>AI PPT maker</strong> for a single slide, Beautiful.ai brings the right tools into your workflow, so you move faster and stay in control. <span class="opt-pill opt">Optimized</span></p>
+  <div class="two-col-wide">
+    <div class="card">
+      <div class="section-tag tag-same" style="margin-bottom:10px;">Unchanged</div>
+      <h3>AI Creation Workflow</h3>
+      <p>Add a prompt, then create multi-slide presentations in natural stages. Move from prompt, to outline, then final designs.</p>
+    </div>
+    <div class="card">
+      <div class="section-tag tag-opt" style="margin-bottom:10px;">Optimized</div>
+      <h3>AI Slide Generation</h3>
+      <p>Need to add one more slide? Use the <strong>AI slide generator</strong> to prompt for a single slide, or choose a Smart Slide layout to get started. <span class="opt-pill opt">Optimized</span></p>
+    </div>
+    <div class="card">
+      <div class="section-tag tag-same" style="margin-bottom:10px;">Unchanged</div>
+      <h3>AI Images</h3>
+      <p>Prompt your idea, and we'll generate an image that matches your deck style.</p>
+    </div>
+    <div class="card">
+      <div class="section-tag tag-same" style="margin-bottom:10px;">Unchanged</div>
+      <h3>AI Writing Assistant</h3>
+      <p>Create, re-write, expand, or shorten any text within a slide.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BRAND CONTROLS -->
+<section>
+  <div class="section-tag tag-same">Unchanged</div>
+  <h2>Presentations styled to your brand, with complete visual controls.</h2>
+  <p class="subhead">Set and preview custom AI image styles. Define colors, fonts, and logos only once and control your brand with ease.</p>
+  <div class="two-col-wide">
+    <div class="placeholder" style="aspect-ratio:4/3;">[Custom AI image style visual]</div>
+    <div class="placeholder" style="aspect-ratio:4/3;">[Themes / brand alignment visual]</div>
+  </div>
+</section>
+
+<!-- WE BELIEVE -->
+<section>
+  <div class="section-tag tag-opt">Optimized</div>
+  <h2>We believe in human creativity, accelerated by AI</h2>
+  <p class="subhead">Discover the <strong>AI presentation maker</strong> workflow built for how professionals actually work: creation, not one-shot generation. Our context-aware AI stays with you from the initial outline to the finished design, so every <strong>AI-generated PowerPoint</strong> or deck you build keeps moving forward without losing momentum. <span class="opt-pill opt">Optimized</span></p>
+  <button class="btn-lg">Get started</button>
+  <div class="placeholder" style="aspect-ratio:16/5;margin-top:40px;">[Prompt examples gallery — 5 use case prompts — Unchanged]</div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section>
+  <div class="section-tag tag-same">Unchanged</div>
+  <h4 style="margin-bottom:24px;">What customers say</h4>
+  <div class="three-col">
+    <div class="testimonial">
+      <p>"I love the convenience and beautiful decks it creates plus the AI assistance is a terrific time saver by providing design inspiration and content for the slides, which are 100% editable."</p>
+      <div class="testimonial-meta">Customer</div>
+    </div>
+    <div class="testimonial">
+      <p>"The generative AI tools are awesome, and even with heavy modifications the outlining and slide generation saves lots of time."</p>
+      <div class="testimonial-meta">Customer</div>
+    </div>
+    <div class="testimonial">
+      <p>"The AI has really helped me write sentences in English that sound better, without coming across as too corporate."</p>
+      <div class="testimonial-meta">Customer</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section>
+  <div class="section-tag tag-opt">Optimized</div>
+  <h2>Discover a faster way to create stunning presentations with AI <span class="opt-pill opt">Optimized</span></h2>
+  <p class="subhead">The <strong>AI presentation maker</strong> that works smart, works simple, works beautiful. <span class="opt-pill opt">Optimized</span></p>
+  <button class="btn-lg">Get started</button>
+</section>
+
+<!-- NEW: FAQ -->
+<section>
+  <div class="section-tag tag-new">New Section</div>
+  <h2>Frequently Asked Questions <span class="opt-pill new">New</span></h2>
+  <p style="font-size:13px;color:#888;margin-bottom:32px;">Questions based on confirmed live PAA data and Google "Things to Know" nodes. Backed by FAQPage schema.</p>
+
+  <div class="faq-item">
+    <div class="faq-q">What is the best AI presentation maker?</div>
+    <div class="faq-a">The best <strong>AI presentation maker</strong> depends on your workflow. Beautiful.ai stands out for teams and professionals who want a guided creation process rather than a one-shot generator. You shape the outline before the design begins, which means fewer surprises and less rework. If design consistency and brand control matter to your organization, Beautiful.ai's Smart Slides and theme system keep every deck on-brand without manual effort.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Can you use AI to make a presentation?</div>
+    <div class="faq-a">Yes. <strong>AI presentation makers</strong> like Beautiful.ai let you generate a full deck from a text prompt, document, or outline. The AI structures your content into slides, applies layouts, and handles design, so you start with a polished draft rather than a blank canvas. Beautiful.ai adds a review step between the outline and the final design, so the result reflects your actual content and goals.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Can ChatGPT create presentations?</div>
+    <div class="faq-a">ChatGPT can write presentation outlines and slide copy, but it cannot produce a designed, visual deck on its own. To go from ChatGPT output to a finished presentation, you would need to paste the content into a design tool. Beautiful.ai handles the full workflow: content structure, slide design, and formatting are all done inside one platform, with no copy-paste step required.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Is Beautiful.ai free to use?</div>
+    <div class="faq-a">Beautiful.ai offers a free trial so you can explore the <strong>AI presentation maker</strong> before committing to a plan. Paid plans are available for individuals, teams, and enterprise organizations, each with access to the full AI creation workflow, Smart Slides, brand controls, and more.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">How do I choose an AI presentation maker?</div>
+    <div class="faq-a">When choosing an <strong>AI presentation maker</strong>, consider workflow fit, design quality, brand control, and export options. Beautiful.ai is built for organizations where presentation quality and brand consistency matter, not just speed.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Can Beautiful.ai export to PowerPoint?</div>
+    <div class="faq-a">Yes. Every deck created in Beautiful.ai can be exported as a PowerPoint file, so you can use it as your <strong>AI PPT maker</strong> and still deliver presentations in the format your clients or colleagues expect. Slides are fully editable after export.</div>
+  </div>
+</section>
+
+
+
+<section style="padding:28px 80px;border-bottom:none;">
+  <p style="font-size:13px;color:#999;text-align:center;">© 2026 Beautiful Slides, Inc. All rights reserved.</p>
+</section>
+
+</div>
+
+<script>
+document.querySelectorAll('.tab-item').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

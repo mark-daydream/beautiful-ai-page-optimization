@@ -1,0 +1,1586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beautiful.ai — AI Presentation Maker | On-Page Optimization Draft</title>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+
+  /* ── DAYDREAM TOKENS ─────────────────────────────── */
+  :root {
+    --pink:        #FFCADF;
+    --lavender:    #EED1FF;
+    --lavender-lt: #F7E8FD;
+    --blue-ice:    #D0F2FF;
+    --blue-sky:    #B7EBFF;
+    --mint:        #C3F2D0;
+    --peach-lt:    #EED1FF;
+    --peach-warm:  #D8AAFF;
+    --off-white:   #FFFFFB;
+    --warm-cream:  #FFF9F4;
+    --near-black:  #232323;
+    --text-subtle: #6B6B6B;
+    --border:      #E8E2DC;
+    --grad: linear-gradient(135deg, #C3F2D0 0%, #B3EAFF 53%, #FEE3CC 100%);
+    --grad-h: linear-gradient(90deg, #C3F2D0 0%, #B3EAFF 53%, #FEE3CC 100%);
+  }
+
+  /* ── RESET & BASE ────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Raleway', sans-serif;
+    background: var(--warm-cream);
+    color: var(--near-black);
+    min-height: 100vh;
+  }
+
+  /* ── WAVY HEADER ─────────────────────────────────── */
+  .page-header {
+    background: var(--near-black);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 48px 80px 80px;
+  }
+  .page-header::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: var(--warm-cream);
+    clip-path: ellipse(55% 100% at 50% 100%);
+  }
+  .header-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mint);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .header-eyebrow::before {
+    content: '✦';
+    background: var(--grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .page-title {
+    font-size: clamp(32px, 4vw, 44px);
+    font-weight: 500;
+    color: var(--off-white);
+    line-height: 1.15;
+    margin-bottom: 16px;
+    max-width: 560px;
+  }
+  .page-title span {
+    background: var(--grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .page-meta {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-subtle);
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .page-meta span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #8a8a8a;
+  }
+  .page-meta span strong { color: var(--off-white); font-weight: 600; }
+
+  /* ── MAIN LAYOUT ─────────────────────────────────── */
+  .main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 56px clamp(24px, 6vw, 80px) 80px;
+  }
+
+  /* ── LEGEND ──────────────────────────────────────── */
+  .legend {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 48px;
+    padding: 16px 20px;
+    background: var(--off-white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+  .legend-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-subtle);
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--near-black);
+  }
+  .legend-pill {
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+  .pill-opt  { background: var(--peach-lt); color: #4a1a7a; border: 1px solid var(--peach-warm); }
+  .pill-new  { background: var(--mint);     color: #1a5c2a; border: 1px solid #8edda0; }
+  .pill-same { background: var(--blue-ice); color: #1a4a5c; border: 1px solid var(--blue-sky); }
+
+  /* ── METADATA TABLE ──────────────────────────────── */
+  .meta-card {
+    background: var(--off-white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 48px;
+  }
+  .meta-card-header {
+    background: var(--near-black);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .meta-card-header span {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mint);
+  }
+  .meta-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .meta-table tr { border-bottom: 1px solid var(--border); }
+  .meta-table tr:last-child { border-bottom: none; }
+  .meta-table td { padding: 12px 24px; vertical-align: top; line-height: 1.55; }
+  .meta-table td:first-child {
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-subtle);
+    width: 200px;
+    white-space: nowrap;
+    background: var(--warm-cream);
+  }
+  .meta-table td:last-child { color: var(--near-black); }
+  .meta-note { font-style: italic; color: var(--text-subtle); font-size: 12px; }
+
+  /* ── SECTION LABEL ───────────────────────────────── */
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-subtle);
+    margin: 48px 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .section-label .new-badge {
+    background: var(--mint);
+    color: #1a5c2a;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-weight: 700;
+  }
+
+  /* ── CHANGE BLOCK ────────────────────────────────── */
+  .change-block {
+    margin-bottom: 24px;
+  }
+  .element-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--near-black);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* ── BEFORE / AFTER TABLE ────────────────────────── */
+  .ba-wrap {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .ba-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .ba-col-head {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .before-head { background: var(--warm-cream); color: var(--text-subtle); border-right: 1px solid var(--border); }
+  .after-head  { background: var(--peach-lt);   color: #4a1a7a; }
+  .ba-body { display: grid; grid-template-columns: 1fr 1fr; }
+  .before-cell {
+    padding: 14px 16px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--text-subtle);
+    background: var(--warm-cream);
+    border-right: 1px solid var(--border);
+  }
+  .after-cell {
+    padding: 14px 16px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--near-black);
+    background: var(--peach-lt);
+    font-weight: 400;
+  }
+  .after-cell strong {
+    background: #d8aaff;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-weight: 700;
+  }
+
+  /* ── UNCHANGED ───────────────────────────────────── */
+  .unchanged-wrap {
+    background: var(--blue-ice);
+    border: 1px solid var(--blue-sky);
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: #1a4a5c;
+    font-style: italic;
+  }
+
+  /* ── CHANGE NOTE ─────────────────────────────────── */
+  .change-note {
+    font-size: 12px;
+    color: var(--text-subtle);
+    margin-top: 6px;
+    padding-left: 4px;
+    font-style: italic;
+  }
+
+  /* ── DIVIDER ─────────────────────────────────────── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 40px 0;
+  }
+
+  /* ── FAQ SECTION ─────────────────────────────────── */
+  .faq-intro {
+    background: var(--mint);
+    border-radius: 12px;
+    padding: 14px 20px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a3d22;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .faq-note {
+    font-size: 12px;
+    font-weight: 500;
+    color: #2a6b38;
+    margin-top: 4px;
+    font-style: italic;
+  }
+  .faq-block {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #8edda0;
+    margin-bottom: 12px;
+  }
+  .faq-q {
+    background: var(--mint);
+    padding: 12px 18px;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #1a3d22;
+  }
+  .faq-a {
+    background: #f0fbf3;
+    padding: 12px 18px;
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: var(--near-black);
+  }
+
+  /* ── KEYWORD TABLES ──────────────────────────────── */
+  .kw-card {
+    background: var(--off-white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .kw-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .kw-table th {
+    background: var(--near-black);
+    color: var(--off-white);
+    text-align: left;
+    padding: 10px 18px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .kw-table td {
+    padding: 10px 18px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .kw-table tr:last-child td { border-bottom: none; }
+  .kw-table tr:nth-child(even) td { background: var(--warm-cream); }
+  .kw-highlight {
+    font-weight: 700;
+    color: #7c3aed;
+  }
+  .kw-num {
+    font-weight: 800;
+    color: var(--near-black);
+    font-size: 15px;
+  }
+
+  /* ── SCHEMA BLOCK ────────────────────────────────── */
+  .schema-header {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-subtle);
+    margin-bottom: 8px;
+  }
+  .schema-note {
+    font-size: 13px;
+    color: var(--text-subtle);
+    margin-bottom: 12px;
+    line-height: 1.55;
+  }
+  .schema-note a { color: #3b5bdb; }
+  .schema-block {
+    background: var(--near-black);
+    color: #cdd6f4;
+    font-family: 'Courier New', monospace;
+    font-size: 11.5px;
+    padding: 24px;
+    border-radius: 16px;
+    overflow-x: auto;
+    line-height: 1.65;
+    white-space: pre;
+  }
+
+  /* ── GRADIENT ACCENT STRIP ───────────────────────── */
+  .grad-strip {
+    height: 4px;
+    background: var(--grad-h);
+    border-radius: 2px;
+    margin-bottom: 48px;
+  }
+
+  @media print {
+    body { background: #fff; }
+    .page-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+
+  /* ── COMMENT SYSTEM ─────────────────────────────── */
+  .change-block { position: relative; }
+
+  .comment-trigger {
+    position: absolute;
+    top: 0;
+    right: -44px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--off-white);
+    border: 1.5px solid var(--border);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: var(--text-subtle);
+    transition: all 0.15s ease;
+    z-index: 10;
+    flex-shrink: 0;
+  }
+  .comment-trigger:hover {
+    background: var(--lavender);
+    border-color: #c49aff;
+    color: #4a1a7a;
+    transform: scale(1.1);
+  }
+  .comment-trigger.has-comment {
+    background: var(--lavender);
+    border-color: #c49aff;
+    color: #4a1a7a;
+  }
+  .comment-trigger.has-comment::after {
+    content: '';
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    width: 9px;
+    height: 9px;
+    background: #a855f7;
+    border-radius: 50%;
+    border: 2px solid var(--warm-cream);
+  }
+
+  .comment-box {
+    display: none;
+    margin-top: 10px;
+    border: 1.5px solid #c49aff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(168,85,247,0.12);
+  }
+  .comment-box.open { display: block; }
+
+  .comment-header {
+    background: var(--lavender);
+    padding: 8px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #4a1a7a;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .comment-header button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    color: #4a1a7a;
+    font-weight: 700;
+    padding: 0 4px;
+    font-family: 'Raleway', sans-serif;
+  }
+  .comment-header button:hover { opacity: 0.6; }
+
+  .comment-textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 12px 14px;
+    font-family: 'Raleway', sans-serif;
+    font-size: 13.5px;
+    border: none;
+    outline: none;
+    resize: vertical;
+    background: #fdf8ff;
+    color: var(--near-black);
+    line-height: 1.55;
+  }
+
+  .comment-footer {
+    background: #fdf8ff;
+    padding: 8px 14px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    border-top: 1px solid #e8d5ff;
+  }
+  .comment-btn {
+    font-family: 'Raleway', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .comment-btn:hover { opacity: 0.8; }
+  .comment-btn-save {
+    background: #a855f7;
+    color: white;
+  }
+  .comment-btn-clear {
+    background: var(--border);
+    color: var(--text-subtle);
+  }
+
+  /* Comment panel */
+  .comments-panel {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 380px;
+    height: 100vh;
+    background: var(--off-white);
+    border-left: 1px solid var(--border);
+    box-shadow: -4px 0 24px rgba(0,0,0,0.08);
+    z-index: 1000;
+    transition: right 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Raleway', sans-serif;
+  }
+  .comments-panel.open { right: 0; }
+
+  .panel-header {
+    background: var(--near-black);
+    padding: 20px 20px 16px;
+    flex-shrink: 0;
+  }
+  .panel-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--off-white);
+    margin-bottom: 4px;
+  }
+  .panel-sub {
+    font-size: 12px;
+    color: #8a8a8a;
+  }
+  .panel-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    color: #8a8a8a;
+    font-size: 20px;
+    cursor: pointer;
+    font-family: 'Raleway', sans-serif;
+    line-height: 1;
+  }
+  .panel-close:hover { color: var(--off-white); }
+
+  .panel-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+  }
+  .panel-empty {
+    text-align: center;
+    color: var(--text-subtle);
+    font-size: 13px;
+    margin-top: 48px;
+    line-height: 1.6;
+  }
+  .panel-empty span { font-size: 28px; display: block; margin-bottom: 12px; }
+
+  .panel-comment {
+    background: var(--warm-cream);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 12px;
+  }
+  .panel-comment-section {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #a855f7;
+    margin-bottom: 6px;
+  }
+  .panel-comment-copy {
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--text-subtle);
+    font-style: italic;
+    margin-bottom: 8px;
+    padding: 6px 10px;
+    background: var(--warm-cream);
+    border-radius: 6px;
+    border-left: 3px solid var(--border);
+  }
+  .panel-comment-text {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--near-black);
+    white-space: pre-wrap;
+  }
+
+  .panel-footer {
+    padding: 16px 20px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .panel-export-btn {
+    flex: 1;
+    font-family: 'Raleway', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .panel-export-btn:hover { opacity: 0.85; }
+  .btn-export-json { background: var(--near-black); color: var(--off-white); }
+  .btn-clear-all   { background: var(--border);     color: var(--text-subtle); }
+
+  /* FAB to open panel */
+  .comments-fab {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    background: var(--near-black);
+    color: var(--off-white);
+    border: none;
+    border-radius: 999px;
+    padding: 12px 20px;
+    font-family: 'Raleway', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    z-index: 999;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .comments-fab:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.25);
+  }
+  .comments-fab .fab-count {
+    background: #a855f7;
+    color: white;
+    border-radius: 999px;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Widen main to accommodate comment triggers */
+  .main { padding-right: clamp(48px, 8vw, 96px); }
+
+
+  /* ── COPY BUTTON ─────────────────────────────────── */
+  .schema-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .copy-btn {
+    font-family: 'Raleway', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 6px 16px;
+    border-radius: 999px;
+    border: 1.5px solid var(--border);
+    background: var(--off-white);
+    color: var(--near-black);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s ease;
+    letter-spacing: 0.02em;
+  }
+  .copy-btn:hover {
+    background: var(--lavender);
+    border-color: #c49aff;
+    color: #4a1a7a;
+  }
+  .copy-btn.copied {
+    background: var(--mint);
+    border-color: #8edda0;
+    color: #1a5c2a;
+  }
+
+</style>
+</head>
+<body>
+<!-- ── CLIENT NAV ── -->
+<div style="position:sticky;top:0;z-index:9999;background:#1C1C1E;padding:10px 32px;display:flex;align-items:center;gap:16px;font-family:'Raleway',sans-serif;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.08);">
+  <svg width="28" height="28" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0;">
+  <rect x="1" y="1" width="78" height="78" rx="9" fill="url(#nav-icon-grad)"/>
+  <rect x="1" y="1" width="78" height="78" rx="9" stroke="#232323" stroke-width="2"/>
+  <path d="M57.875 20.0347C57.875 20.0347 34.659 55.5902 27.0008 55.5902C19.3426 55.5902 29.2975 33.7213 41.2151 33.7213C52.4402 33.7213 27.0666 55.5902 36.5631 55.5902C42.1563 55.5902 51.2626 43.146 51.2626 43.146" stroke="#232323" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <defs>
+    <linearGradient id="nav-icon-grad" x1="0" y1="40" x2="80" y2="40" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#C3F2D0"/>
+      <stop offset="0.53" stop-color="#B3EAFF"/>
+      <stop offset="1" stop-color="#FEE3CC"/>
+    </linearGradient>
+  </defs>
+</svg>
+  <span style="color:rgba(255,255,255,0.15);">|</span>
+  <span style="color:#fff;font-weight:700;">Optimization Draft</span>
+  <a href="/mockup.html" style="color:rgba(255,255,255,0.5);text-decoration:none;font-weight:600;margin-left:8px;" onmouseover="this.style.color='#C3F2D0'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">View Mockup &#x2192;</a>
+</div>
+
+
+<!-- ── HEADER ── -->
+<div class="page-header">
+<div class="page-header-inner">
+  <div class="header-eyebrow">SEO Content Strategy &nbsp;·&nbsp; On-Page Optimization</div>
+  <h1 class="page-title">Beautiful.ai<br>Optimization Draft</h1>
+  <div class="page-meta">
+    <span><strong>Keyword:</strong> ai presentation maker</span>
+    <span><strong>Page:</strong> beautiful.ai/presentation-maker</span>
+    <span><strong>Prepared:</strong> May 2026</span>
+  </div>
+</div>
+</div>
+
+<div class="main">
+  <div class="grad-strip"></div>
+
+  <div class="legend">
+    <span class="legend-label">Legend</span>
+    <div class="legend-item"><span class="legend-pill pill-opt">Optimized</span> Changed copy</div>
+    <div class="legend-item"><span class="legend-pill pill-new">New</span> Net-new content</div>
+    <div class="legend-item"><span class="legend-pill pill-same">Unchanged</span> Original preserved</div>
+  </div>
+
+  <div class="meta-card">
+    <div class="meta-card-header"><span>Page Metadata</span></div>
+    <table class="meta-table">
+      <tr><td>Page URL</td><td>https://www.beautiful.ai/presentation-maker</td></tr>
+      <tr><td>Primary Keyword</td><td>ai presentation maker</td></tr>
+      <tr><td>Supporting Keywords</td><td>ai presentation generator, ai ppt maker, ai slideshow generator, ai powerpoint generator, ppt generator, ai generated powerpoint, slides generator</td></tr>
+      <tr><td>Proposed Title Tag</td><td>AI Presentation Maker | Create Slides &amp; Decks in Minutes <span class="meta-note">(unchanged, 57 chars, already optimized)</span></td></tr>
+      <tr><td>Proposed Meta Description</td><td>Beautiful.ai is the AI presentation maker built for how professionals actually work. Go from prompt to polished deck, with Smart Slides handling the design. <span class="meta-note">(158 chars)</span></td></tr>
+      <tr><td>Summary</td><td>Primary keyword raised to 10+ on-page instances. Two new informational sections added: "What is an AI Presentation Maker" definition block and "How It Works" three-step section. FAQ section added targeting confirmed live PAA questions. FAQPage schema included. Supporting keywords woven into existing copy. Cannibalization note flagged for client review.</td></tr>
+    </table>
+  </div>
+
+  <div style="background:#fff3b0;border:1.5px solid #e6d84a;border-radius:12px;padding:16px 20px;margin-bottom:40px;font-family:'Raleway',sans-serif;font-size:13px;line-height:1.6;">
+    <strong style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#7a6000;">Client Flag: Cannibalization Risk</strong>
+    <p style="margin-top:6px;color:#232323;">The Beautiful.ai homepage (<code>beautiful.ai</code>) has historically targeted "ai presentation maker," potentially splitting authority with this page. A canonical tag review and internal linking audit is recommended alongside this on-page work. This is outside the scope of this engagement but should be flagged to the client.</p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section-label">Metadata</div>
+
+  <div class="change-block">
+    <div class="element-label"><span class="legend-pill pill-same">Unchanged</span> Title Tag</div>
+    <div class="unchanged-wrap">AI Presentation Maker | Create Slides &amp; Decks in Minutes</div>
+    <div class="change-note">Already contains primary keyword near the front. 57 characters. No changes needed.</div>
+  </div>
+
+  <div class="change-block">
+    <div class="element-label"><span class="legend-pill pill-opt">Optimized</span> Meta Description</div>
+    <div class="ba-wrap">
+      <div class="ba-cols"><div class="ba-col-head before-head">Before</div><div class="ba-col-head after-head">After</div></div>
+      <div class="ba-body">
+        <div class="before-cell">Generate professional, on-brand presentations with AI. Create full decks, slides, copy, and images in seconds, then refine with Smart Slides for superspeed editing.</div>
+        <div class="after-cell">Beautiful.ai is the <strong>AI presentation maker</strong> built for how professionals actually work. Go from prompt to polished deck, with Smart Slides handling the design.</div>
+      </div>
+    </div>
+    <div class="change-note">Primary keyword in first sentence. Brand name added for co-occurrence. 158 characters.</div>
+  </div>
+
+  <div class="change-block">
+    <div class="element-label"><span class="legend-pill pill-opt">Optimized</span> H1</div>
+    <div class="ba-wrap">
+      <div class="ba-cols"><div class="ba-col-head before-head">Before</div><div class="ba-col-head after-head">After</div></div>
+      <div class="ba-body">
+        <div class="before-cell">AI presentations that mean business</div>
+        <div class="after-cell">The <strong>AI Presentation Maker</strong> that means business</div>
+      </div>
+    </div>
+    <div class="change-note">Primary keyword lands in H1. Brand voice and rhythm preserved. Instance #1.</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section-label">Hero Section</div>
+
+  <div class="change-block">
+    <div class="element-label"><span class="legend-pill pill-opt">Optimized</span> Hero Intro Paragraph</div>
+    <div class="ba-wrap">
+      <div class="ba-cols"><div class="ba-col-head before-head">Before</div><div class="ba-col-head after-head">After</div></div>
+      <div class="ba-body">
+        <div class="before-cell">Move from prompt to work-ready decks faster with AI that matches your natural creation process. The result is less rework, fewer edits, and designer-quality slides with the content you intended.</div>
+        <div class="after-cell">Beautiful.ai is the <strong>AI presentation maker</strong> built for how professionals actually work. Move from prompt to polished deck faster, with less rework, fewer edits, and designer-quality slides with the content you intended.</div>
+      </div>
+    </div>
+    <div class="change-note">Primary keyword in first sentence. Word count equivalent. Instance #2.</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section-label">New Section: "What Is an AI Presentation Maker" <span class="new-badge">NEW</span></div>
+
+  <div class="change-block">
+    <div class="element-label"><span class="legend-pill pill-new">New</span> Definition Block (add after hero, before features)</div>
+    <div class="faq-block">
+      <div class="faq-q" style="font-size:15px;">H2: What Is an AI Presentation Maker?</div>
+      <div class="faq-a">
+        <p>An <strong>AI presentation maker</strong> is a tool that uses artificial intelligence to generate professional slide decks from a text prompt, document, or outline. You describe what you need, and the AI handles structure, layout, and design, giving you a polished starting point in minutes rather than hours.</p>
+        <p style="margin-top:10px;">Most <strong>AI presentation generators</strong> produce a finished deck in one shot. Beautiful.ai works differently: the AI walks you through the process in stages (prompt, outline review, then design) so the final result reflects what you actually intended. Smart Slides then handle the formatting automatically as you edit.</p>
+      </div>
+    </div>
+    <div class="change-note">Addresses the #1 confirmed gap: every top-ranking competitor has a "What is" definition block. Required to answer Google's "Things to Know" node. LLM-extractable phrasing for AI Overview eligibility. Two instances of primary keyword plus one instance of "AI presentation generator" (priority #2 supporting keyword).</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section-label">New Section: "How It Works" <span class="new-badge">NEW</span></div>
+
+  <div class="change-block">
+    <div class="element-label"><span class="legend-pill pill-new">New</span> Three-Step How-To Section (add after definition block)</div>
+    <div class="faq-block">
+      <div class="faq-q" style="font-size:15px;">H2: How to Use Beautiful.ai's AI Presentation Maker</div>
+      <div class="faq-a">
+        <p><strong>Step 1: Start with a prompt, outline, or document.</strong> Type a description of your presentation, paste an existing outline, or upload a document. Beautiful.ai reads your input and structures the content into a logical flow.</p>
+        <p style="margin-top:10px;"><strong>Step 2: Review and shape the outline.</strong> Before any slides are designed, you see a slide-by-slide outline. Edit, reorder, or add topics. This is what separates our <strong>AI presentation maker</strong> from one-shot generators: you stay in control before the design begins.</p>
+        <p style="margin-top:10px;"><strong>Step 3: Generate and refine.</strong> Once the outline is approved, Beautiful.ai generates the full deck. Smart Slides auto-format every layout. Edit any slide, regenerate images, adjust copy, or add a new <strong>AI-generated PowerPoint</strong>-compatible slide in seconds.</p>
+        <p style="margin-top:10px;">Export to PowerPoint, PDF, or share a live link. Every deck is ready to deliver in the format your audience expects.</p>
+      </div>
+    </div>
+    <div class="change-note">Addresses the second confirmed gap: every top-ranking competitor has a step-by-step how-to section. Numbered steps increase Featured Snippet eligibility. Includes "AI presentation maker" (instances #4 and #5), "AI-generated PowerPoint" (supporting keyword #6), and export format transparency, all identified as missing from the current page.</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section-label">Create with AI / Smart Slides Tabs Section</div>
+
+  <div class="change-block">
+    <div class="element-label"><span class="legend-pill pill-same">Unchanged</span> H2</div>
+    <div class="unchanged-wrap">Create with AI, refine with Smart Slides</div>
+  </div>
+
+  <div class="change-block">
+    <div class="element-label"><span class="legend-pill pill-opt">Optimized</span> Tab 1: "Draft in stages" description</div>
+    <div class="ba-wrap">
+      <div class="ba-cols"><div class="ba-col-head before-head">Before</div><div class="ba-col-head after-head">After</div></div>
+      <div class="ba-body">
+        <div class="before-cell">Start from a long or short prompt, shape the outline first, then generate polished slides. Our Create with AI is now a guided workflow, not a one shot generator.</div>
+        <div class="after-cell">Start from a long or short prompt, shape the outline first, then generate polished slides. Our Create with AI <strong>presentation generator</strong> is a guided workflow, not a one-shot tool.</div>
+      </div>
+    </div>
+    <div class="change-note">"AI presentation generator" (priority #2) introduced around the branded feature name "Create with AI." Word count preserved.</div>
+  </div>
+
+  <div class="change-block">
+    <div class="element-label"><span class="legend-pill pill-same">Unchanged</span> Tab 2</div>
+    <div class="unchanged-wrap">Smart Slides are intelligent layouts that realign, resize, and animate your content automatically. You focus on the story, Smart Slides handle the formatting.</div>
+  </div>
+
+  <div class="change-block">
+    <div class="element-label"><span class="legend-pill pill-same">Unchanged</span> Tab 3</div>
+    <div class="unchanged-wrap">Preview over 300 designer slide layouts, or generate fresh AI slides on the fly. Smart Slides keep your content aligned, on-brand, and beautiful.</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section-label">AI Features Grid Section</div>
+
+  <div class="change-block">
+    <div class="element-label"><span class="legend-pill pill-same">Unchanged</span> H2</div>
+    <div class="unchanged-wrap">Discover AI that fits every step of your presentation workflow</div>
+  </div>
+
+  <div class="change-block">
+    <div class="element-label"><span class="legend-pill pill-opt">Optimized</span> Intro Paragraph</div>
+    <div class="ba-wrap">
+      <div class="ba-cols"><div class="ba-col-head before-head">Before</div><div class="ba-col-head after-head">After</div></div>
+      <div class="ba-body">
+        <div class="before-cell">From full decks to final details, Beautiful.ai also brings targeted AI features into your workflow, so you move faster and stay in control.</div>
+        <div class="after-cell">Whether you need a full <strong>AI presentation maker</strong> or a targeted <strong>AI PPT maker</strong> for a single slide, Beautiful.ai brings the right tools into your workflow, so you move faster and stay in control.</div>
+      </div>
+    </div>
+    <div class="change-note">"AI presentation maker" instance #6. "AI PPT maker" (priority #3) introduced.</div>
+  </div>
+
+  <div class="change-block">
+    <div class="element-label"><span class="legend-pill pill-same">Unchanged</span> Feature Card: AI Creation Workflow</div>
+    <div class="unchanged-wrap">Add a prompt, then create multi-slide presentations in natural stages. Move from prompt, to outline, then final designs.</div>
+  </div>
+
+  <div class="change-block">
+    <div class="element-label"><span class="legend-pill pill-opt">Optimized</span> Feature Card: AI Slide Generation</div>
+    <div class="ba-wrap">
+      <div class="ba-cols"><div class="ba-col-head before-head">Before</div><div class="ba-col-head after-head">After</div></div>
+      <div class="ba-body">
+        <div class="before-cell">Need to add one more slide? Prompt for a single slide or choose a new Smart Slide layout to give you a starting point.</div>
+        <div class="after-cell">Need to add one more slide? Use the <strong>AI slide generator</strong> to prompt for a single slide, or choose a Smart Slide layout to get started.</div>
+      </div>
+    </div>
+    <div class="change-note">"AI slide generator" is a natural variant of "ai slideshow generator" (priority #4).</div>
+  </div>
+
+  <div class="change-block">
+    <div class="element-label"><span class="legend-pill pill-same">Unchanged</span> Feature Card: AI Images</div>
+    <div class="unchanged-wrap">Prompt your idea, and we'll generate an image that matches your deck style.</div>
+  </div>
+
+  <div class="change-block">
+    <div class="element-label"><span class="legend-pill pill-same">Unchanged</span> Feature Card: AI Writing Assistant</div>
+    <div class="unchanged-wrap">Create, re-write, expand, or shorten any text within a slide.</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section-label">Brand Controls Section</div>
+
+  <div class="change-block">
+    <div class="element-label"><span class="legend-pill pill-same">Unchanged</span> H2 + Intro</div>
+    <div class="unchanged-wrap">Presentations styled to your brand, with complete visual controls. Set and preview custom AI image styles. Define colors, fonts, and logos only once and control your brand with ease.</div>
+    <div class="change-note">Brand/design focused. No keyword territory to add without forcing.</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section-label">"We Believe" Section</div>
+
+  <div class="change-block">
+    <div class="element-label"><span class="legend-pill pill-same">Unchanged</span> H2</div>
+    <div class="unchanged-wrap">We believe in human creativity, accelerated by AI</div>
+  </div>
+
+  <div class="change-block">
+    <div class="element-label"><span class="legend-pill pill-opt">Optimized</span> Body Paragraph</div>
+    <div class="ba-wrap">
+      <div class="ba-cols"><div class="ba-col-head before-head">Before</div><div class="ba-col-head after-head">After</div></div>
+      <div class="ba-body">
+        <div class="before-cell">Discover our new workflow that matches how professionals actually work: creation, not one-shot generation. Our context-aware AI stays with you from the initial outline to the finished design, so you can iterate on your slides without losing momentum.</div>
+        <div class="after-cell">Discover the <strong>AI presentation maker</strong> workflow built for how professionals actually work: creation, not one-shot generation. Our context-aware AI stays with you from the initial outline to the finished design, so every <strong>AI-generated PowerPoint</strong> or deck you build keeps moving forward without losing momentum.</div>
+      </div>
+    </div>
+    <div class="change-note">"AI presentation maker" instance #7. "AI-generated PowerPoint" (priority #6). First-person voice ("Our context-aware AI") preserved.</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section-label">Gallery / Prompt Examples Section</div>
+
+  <div class="change-block">
+    <div class="element-label"><span class="legend-pill pill-opt">Optimized</span> H2</div>
+    <div class="ba-wrap">
+      <div class="ba-cols"><div class="ba-col-head before-head">Before</div><div class="ba-col-head after-head">After</div></div>
+      <div class="ba-body">
+        <div class="before-cell">Create decks faster with Beautiful.ai</div>
+        <div class="after-cell">Create decks faster with Beautiful.ai's <strong>AI Presentation Maker</strong></div>
+      </div>
+    </div>
+    <div class="change-note">"AI Presentation Maker" instance #8.</div>
+  </div>
+
+  <div class="change-block">
+    <div class="element-label"><span class="legend-pill pill-same">Unchanged</span> Intro Paragraph</div>
+    <div class="unchanged-wrap">Start with a prompt, pasted outline, or document. Review a slide by slide outline first so you can shape the story before high fidelity design.</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section-label">Closing CTA Section</div>
+
+  <div class="change-block">
+    <div class="element-label"><span class="legend-pill pill-opt">Optimized</span> H2</div>
+    <div class="ba-wrap">
+      <div class="ba-cols"><div class="ba-col-head before-head">Before</div><div class="ba-col-head after-head">After</div></div>
+      <div class="ba-body">
+        <div class="before-cell">Discover a faster way to create stunning presentations.</div>
+        <div class="after-cell">Discover a faster way to create stunning presentations with AI.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="change-block">
+    <div class="element-label"><span class="legend-pill pill-opt">Optimized</span> Subheading</div>
+    <div class="ba-wrap">
+      <div class="ba-cols"><div class="ba-col-head before-head">Before</div><div class="ba-col-head after-head">After</div></div>
+      <div class="ba-body">
+        <div class="before-cell">Work smart, work simple, work beautiful.</div>
+        <div class="after-cell">The <strong>AI presentation maker</strong> that works smart, works simple, works beautiful.</div>
+      </div>
+    </div>
+    <div class="change-note">"AI presentation maker" instance #9. Closes the page on the primary keyword, matching the pattern of Canva and Adobe.</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section-label">New FAQ Section <span class="new-badge">NEW: Add above footer</span></div>
+
+  <div style="margin-bottom:16px;">
+    <div class="change-note" style="margin-top:0;">Questions based on confirmed live PAA data and Google "Things to Know" nodes from handoff research. Add FAQPage schema (below) alongside this section.</div>
+  </div>
+
+  <div style="background:#d4f7dc;padding:10px 16px;margin-bottom:16px;border-radius:4px;font-family:'Raleway',sans-serif;font-size:14px;font-weight:700;color:#1a3d22;">H2: Frequently Asked Questions</div>
+
+  <div class="change-block"><div class="faq-block">
+    <div class="faq-q">What is the best AI presentation maker?</div>
+    <div class="faq-a">The best AI presentation maker depends on your workflow. Beautiful.ai stands out for teams and professionals who want a guided creation process rather than a one-shot generator. You shape the outline before the design begins, which means fewer surprises and less rework. If design consistency and brand control matter to your organization, Beautiful.ai's Smart Slides and theme system keep every deck on-brand without manual effort.</div>
+  </div>
+</div>
+
+  <div class="change-block"><div class="faq-block">
+    <div class="faq-q">Can you use AI to make a presentation?</div>
+    <div class="faq-a">Yes. AI presentation makers like Beautiful.ai let you generate a full deck from a text prompt, document, or outline. The AI structures your content into slides, applies layouts, and handles design, so you start with a polished draft rather than a blank canvas. Beautiful.ai's AI presentation maker adds a review step between the outline and the final design, so the result reflects your actual content and goals.</div>
+  </div>
+</div>
+
+  <div class="change-block"><div class="faq-block">
+    <div class="faq-q">Can ChatGPT create presentations?</div>
+    <div class="faq-a">ChatGPT can write presentation outlines and slide copy, but it cannot produce a designed, visual deck on its own. To go from ChatGPT output to a finished presentation, you would need to paste the content into a design tool. Beautiful.ai handles the full workflow: content structure, slide design, and formatting are all done inside one platform, with no copy-paste step required.</div>
+  </div>
+</div>
+
+  <div class="change-block"><div class="faq-block">
+    <div class="faq-q">Is Beautiful.ai free to use?</div>
+    <div class="faq-a">Beautiful.ai offers a free trial so you can explore the AI presentation maker before committing to a plan. Paid plans are available for individuals, teams, and enterprise organizations, each with access to the full AI creation workflow, Smart Slides, brand controls, and more.</div>
+  </div>
+</div>
+
+  <div class="change-block"><div class="faq-block">
+    <div class="faq-q">How do I choose an AI presentation maker?</div>
+    <div class="faq-a">When choosing an AI presentation maker, consider four things: workflow fit (does it support your creation process, or does it just generate a one-shot draft?), design quality (does the output look professional without manual cleanup?), brand control (can you lock in colors, fonts, and logos?), and export options (does it export to PowerPoint or PDF?). Beautiful.ai is built for organizations where presentation quality and brand consistency matter, not just speed.</div>
+  </div>
+</div>
+
+  <div class="change-block"><div class="faq-block">
+    <div class="faq-q">Can Beautiful.ai export to PowerPoint?</div>
+    <div class="faq-a">Yes. Every deck created in Beautiful.ai can be exported as a PowerPoint file, so you can use it as your AI PPT maker and still deliver presentations in the format your clients or colleagues expect. Slides are fully editable after export.</div>
+  </div>
+</div>
+
+  <hr class="divider">
+
+  <div class="section-label">Keyword Instance Summary</div>
+
+  <div class="kw-card">
+    <table class="kw-table">
+      <tr><th>#</th><th>Keyword</th><th>Placement</th></tr>
+      <tr><td><span class="kw-num">1</span></td><td><span style="font-weight:700;color:#7c3aed;">AI Presentation Maker</span></td><td>H1</td></tr>
+      <tr><td><span class="kw-num">2</span></td><td><span style="font-weight:700;color:#7c3aed;">AI presentation maker</span></td><td>Hero intro paragraph</td></tr>
+      <tr><td><span class="kw-num">3–4</span></td><td><span style="font-weight:700;color:#7c3aed;">AI presentation maker</span></td><td>New "What Is" definition block (2 instances)</td></tr>
+      <tr><td><span class="kw-num">5</span></td><td><span style="font-weight:700;color:#7c3aed;">AI presentation maker</span></td><td>New "How It Works" step 2</td></tr>
+      <tr><td><span class="kw-num">6</span></td><td><span style="font-weight:700;color:#7c3aed;">AI presentation maker</span></td><td>Features grid intro paragraph</td></tr>
+      <tr><td><span class="kw-num">7</span></td><td><span style="font-weight:700;color:#7c3aed;">AI presentation maker</span></td><td>"We Believe" body paragraph</td></tr>
+      <tr><td><span class="kw-num">8</span></td><td><span style="font-weight:700;color:#7c3aed;">AI Presentation Maker</span></td><td>Gallery section H2</td></tr>
+      <tr><td><span class="kw-num">9</span></td><td><span style="font-weight:700;color:#7c3aed;">AI presentation maker</span></td><td>CTA subheading</td></tr>
+      <tr><td><span class="kw-num">10+</span></td><td><span style="font-weight:700;color:#7c3aed;">AI presentation maker</span></td><td>FAQ Q1, Q2, Q4, Q5 answers</td></tr>
+    </table>
+  </div>
+
+  <div class="kw-card" style="margin-top:16px;">
+    <table class="kw-table">
+      <tr><th>Supporting Keyword</th><th>Placement</th><th>Priority</th></tr>
+      <tr><td>ai presentation generator</td><td>Tab 1; "What Is" block; FAQ Q2</td><td>#2</td></tr>
+      <tr><td>ai ppt maker</td><td>Features grid intro; FAQ Q6</td><td>#3</td></tr>
+      <tr><td>ai slideshow generator (variant)</td><td>AI Slide Generation card</td><td>#4</td></tr>
+      <tr><td>ai generated powerpoint (variant)</td><td>"We Believe" body; "How It Works" step 3</td><td>#6</td></tr>
+      <tr><td>ppt generator, slides generator</td><td>Not forced, no natural fit within word count</td><td>#5, #7</td></tr>
+    </table>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section-label">FAQPage Schema: Hand to Developer</div>
+  <div class="schema-header-row">
+    <p class="schema-note" style="margin-bottom:0;">Add to <code>&lt;head&gt;</code> or inline before the FAQ section. Validate at <a href="https://search.google.com/test/rich-results" target="_blank">search.google.com/test/rich-results</a> before publishing.</p>
+    <button class="copy-btn" id="copy-schema-btn" onclick="copySchema()"><span id="copy-icon">&#x2389;</span> <span id="copy-label">Copy Schema</span></button>
+  </div>
+
+  <pre id="schema-json-store" style="display:none">{
+  &quot;@context&quot;: &quot;https://schema.org&quot;,
+  &quot;@type&quot;: &quot;FAQPage&quot;,
+  &quot;mainEntity&quot;: [
+    {
+      &quot;@type&quot;: &quot;Question&quot;,
+      &quot;name&quot;: &quot;What is the best AI presentation maker?&quot;,
+      &quot;acceptedAnswer&quot;: {
+        &quot;@type&quot;: &quot;Answer&quot;,
+        &quot;text&quot;: &quot;The best AI presentation maker depends on your workflow. Beautiful.ai stands out for teams and professionals who want a guided creation process rather than a one-shot generator. You shape the outline before the design begins, which means fewer surprises and less rework.&quot;
+      }
+    },
+    {
+      &quot;@type&quot;: &quot;Question&quot;,
+      &quot;name&quot;: &quot;Can you use AI to make a presentation?&quot;,
+      &quot;acceptedAnswer&quot;: {
+        &quot;@type&quot;: &quot;Answer&quot;,
+        &quot;text&quot;: &quot;Yes. AI presentation makers like Beautiful.ai let you generate a full deck from a text prompt, document, or outline. The AI structures your content into slides, applies layouts, and handles design, so you start with a polished draft rather than a blank canvas.&quot;
+      }
+    },
+    {
+      &quot;@type&quot;: &quot;Question&quot;,
+      &quot;name&quot;: &quot;Can ChatGPT create presentations?&quot;,
+      &quot;acceptedAnswer&quot;: {
+        &quot;@type&quot;: &quot;Answer&quot;,
+        &quot;text&quot;: &quot;ChatGPT can write presentation outlines and slide copy, but it cannot produce a designed, visual deck on its own. Beautiful.ai handles the full workflow: content structure, slide design, and formatting are all done inside one platform, with no copy-paste step required.&quot;
+      }
+    },
+    {
+      &quot;@type&quot;: &quot;Question&quot;,
+      &quot;name&quot;: &quot;Is Beautiful.ai free to use?&quot;,
+      &quot;acceptedAnswer&quot;: {
+        &quot;@type&quot;: &quot;Answer&quot;,
+        &quot;text&quot;: &quot;Beautiful.ai offers a free trial so you can explore the AI presentation maker before committing to a plan. Paid plans are available for individuals, teams, and enterprise organizations.&quot;
+      }
+    },
+    {
+      &quot;@type&quot;: &quot;Question&quot;,
+      &quot;name&quot;: &quot;How do I choose an AI presentation maker?&quot;,
+      &quot;acceptedAnswer&quot;: {
+        &quot;@type&quot;: &quot;Answer&quot;,
+        &quot;text&quot;: &quot;When choosing an AI presentation maker, consider workflow fit, design quality, brand control, and export options. Beautiful.ai is built for organizations where presentation quality and brand consistency matter, not just speed.&quot;
+      }
+    },
+    {
+      &quot;@type&quot;: &quot;Question&quot;,
+      &quot;name&quot;: &quot;Can Beautiful.ai export to PowerPoint?&quot;,
+      &quot;acceptedAnswer&quot;: {
+        &quot;@type&quot;: &quot;Answer&quot;,
+        &quot;text&quot;: &quot;Yes. Every deck created in Beautiful.ai can be exported as a PowerPoint file. Slides are fully editable after export.&quot;
+      }
+    }
+  ]
+}</pre>
+<div class="schema-block">&lt;script type="application/ld+json"&gt;
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the best AI presentation maker?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The best AI presentation maker depends on your workflow. Beautiful.ai stands out for teams and professionals who want a guided creation process rather than a one-shot generator. You shape the outline before the design begins, which means fewer surprises and less rework."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can you use AI to make a presentation?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. AI presentation makers like Beautiful.ai let you generate a full deck from a text prompt, document, or outline. The AI structures your content into slides, applies layouts, and handles design, so you start with a polished draft rather than a blank canvas."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can ChatGPT create presentations?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ChatGPT can write presentation outlines and slide copy, but it cannot produce a designed, visual deck on its own. Beautiful.ai handles the full workflow: content structure, slide design, and formatting are all done inside one platform, with no copy-paste step required."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Beautiful.ai free to use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Beautiful.ai offers a free trial so you can explore the AI presentation maker before committing to a plan. Paid plans are available for individuals, teams, and enterprise organizations."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I choose an AI presentation maker?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "When choosing an AI presentation maker, consider workflow fit, design quality, brand control, and export options. Beautiful.ai is built for organizations where presentation quality and brand consistency matter, not just speed."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can Beautiful.ai export to PowerPoint?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Every deck created in Beautiful.ai can be exported as a PowerPoint file. Slides are fully editable after export."
+      }
+    }
+  ]
+}
+&lt;/script&gt;</div>
+
+</div>
+
+<script>
+// ── COMMENT SYSTEM ──────────────────────────────────────
+const STORAGE_KEY = 'bai_opt_comments';
+
+function loadComments() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
+  catch { return {}; }
+}
+
+function saveComments(comments) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(comments));
+}
+
+function getBlockId(trigger) {
+  return trigger.closest('.change-block').dataset.blockId;
+}
+
+function getBlockLabel(trigger) {
+  const block = trigger.closest('.change-block');
+
+  // Get element label — for FAQ blocks use the question text
+  const el = block.querySelector('.element-label');
+  const faqQ = block.querySelector('.faq-q');
+  const elementLabel = el ? el.innerText.replace(/\n/g, ' ').trim()
+                       : faqQ ? 'FAQ: ' + faqQ.innerText.trim()
+                       : '';
+
+  // Walk backwards to find the nearest section-label
+  let sectionLabel = '';
+  let sibling = block.previousElementSibling;
+  while (sibling) {
+    if (sibling.classList.contains('section-label')) {
+      sectionLabel = sibling.innerText.replace(/\n/g, ' ').trim();
+      break;
+    }
+    sibling = sibling.previousElementSibling;
+  }
+
+  // Pull relevant copy:
+  // - Optimized blocks: use the after-cell text
+  // - Unchanged blocks: use the unchanged-wrap text
+  // - New blocks: use the first faq-q or faq-a text if present, else nothing
+  let copySnippet = '';
+  const afterCell = block.querySelector('.after-cell');
+  const unchangedWrap = block.querySelector('.unchanged-wrap');
+
+  const faqA = block.querySelector('.faq-a');
+  if (afterCell) {
+    const raw = afterCell.innerText.replace(/\n/g, ' ').trim();
+    copySnippet = raw.length > 120 ? raw.slice(0, 117) + '...' : raw;
+  } else if (unchangedWrap) {
+    const raw = unchangedWrap.innerText.replace(/\n/g, ' ').trim();
+    copySnippet = raw.length > 120 ? raw.slice(0, 117) + '...' : raw;
+  } else if (faqA) {
+    // FAQ block — use the answer text
+    const raw = faqA.innerText.replace(/\n/g, ' ').trim();
+    copySnippet = raw.length > 120 ? raw.slice(0, 117) + '...' : raw;
+  }
+
+  const header = [sectionLabel, elementLabel].filter(Boolean).join(' — ');
+  return { header, copySnippet };
+}
+
+function updateFab() {
+  const comments = loadComments();
+  const count = Object.keys(comments).filter(k => comments[k]).length;
+  const fab = document.getElementById('comments-fab');
+  const countEl = fab.querySelector('.fab-count');
+  countEl.textContent = count;
+  countEl.style.display = count > 0 ? 'flex' : 'none';
+}
+
+function updateTrigger(trigger) {
+  const id = getBlockId(trigger);
+  const comments = loadComments();
+  trigger.classList.toggle('has-comment', !!(comments[id] && comments[id].trim()));
+}
+
+function updateAllTriggers() {
+  document.querySelectorAll('.comment-trigger').forEach(updateTrigger);
+}
+
+function openPanel() {
+  const panel = document.getElementById('comments-panel');
+  panel.classList.add('open');
+  renderPanel();
+}
+
+function closePanel() {
+  document.getElementById('comments-panel').classList.remove('open');
+}
+
+function renderPanel() {
+  const comments = loadComments();
+  const body = document.getElementById('panel-body');
+  const entries = Object.entries(comments).filter(([,v]) => v && v.trim());
+
+  if (entries.length === 0) {
+    body.innerHTML = '<div class="panel-empty"><span>💬</span>No comments yet.<br>Click the + button next to any section to leave a note.</div>';
+    return;
+  }
+
+  body.innerHTML = entries.map(([id, text]) => {
+    const trigger = document.querySelector('[data-block-id="' + id + '"] .comment-trigger');
+    const labelObj = trigger ? getBlockLabel(trigger) : { header: id, copySnippet: '' };
+    return '<div class="panel-comment">' +
+      '<div class="panel-comment-section">' + labelObj.header + '</div>' +
+      (labelObj.copySnippet ? '<div class="panel-comment-copy">' + labelObj.copySnippet.replace(/</g,'&lt;') + '</div>' : '') +
+      '<div class="panel-comment-text">' + text.replace(/</g,'&lt;') + '</div>' +
+      '</div>';
+  }).join('');
+}
+
+function exportJSON() {
+  const comments = loadComments();
+  const entries = Object.entries(comments).filter(([,v]) => v && v.trim());
+  if (entries.length === 0) { alert('No comments to export yet.'); return; }
+
+  const output = entries.map(([id, text]) => {
+    const trigger = document.querySelector('[data-block-id="' + id + '"] .comment-trigger');
+    const labelObj = trigger ? getBlockLabel(trigger) : { header: id, copySnippet: '' };
+    return { section: labelObj.header, copy: labelObj.copySnippet, comment: text };
+  });
+
+  const blob = new Blob([JSON.stringify(output, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'beautiful-ai-optimization-comments.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function clearAll() {
+  if (!confirm('Clear all comments? This cannot be undone.')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  updateAllTriggers();
+  updateFab();
+  renderPanel();
+}
+
+// ── INIT ─────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+
+  // Assign IDs to all change blocks
+  document.querySelectorAll('.change-block').forEach((block, i) => {
+    block.dataset.blockId = 'block-' + i;
+  });
+
+  // Inject triggers and comment boxes into each change block
+  document.querySelectorAll('.change-block').forEach((block) => {
+    const id = block.dataset.blockId;
+
+    // Trigger button
+    const trigger = document.createElement('button');
+    trigger.className = 'comment-trigger';
+    trigger.title = 'Add comment';
+    trigger.textContent = '+';
+    block.appendChild(trigger);
+
+    // Comment box
+    const box = document.createElement('div');
+    box.className = 'comment-box';
+    box.innerHTML = '<div class="comment-header"><span>Comment</span><button class="close-comment">✕</button></div>' +
+      '<textarea class="comment-textarea" placeholder="Leave a note for this section..."></textarea>' +
+      '<div class="comment-footer">' +
+        '<button class="comment-btn comment-btn-clear">Clear</button>' +
+        '<button class="comment-btn comment-btn-save">Save</button>' +
+      '</div>';
+    block.appendChild(box);
+
+    // Load existing
+    const comments = loadComments();
+    if (comments[id]) box.querySelector('textarea').value = comments[id];
+
+    // Toggle
+    trigger.addEventListener('click', () => {
+      const isOpen = box.classList.contains('open');
+      document.querySelectorAll('.comment-box.open').forEach(b => b.classList.remove('open'));
+      if (!isOpen) box.classList.add('open');
+      box.querySelector('textarea').focus();
+    });
+
+    // Close X
+    box.querySelector('.close-comment').addEventListener('click', () => {
+      box.classList.remove('open');
+    });
+
+    // Save
+    box.querySelector('.comment-btn-save').addEventListener('click', () => {
+      const val = box.querySelector('textarea').value;
+      const comments = loadComments();
+      comments[id] = val;
+      saveComments(comments);
+      updateTrigger(trigger);
+      updateFab();
+      box.classList.remove('open');
+    });
+
+    // Clear
+    box.querySelector('.comment-btn-clear').addEventListener('click', () => {
+      box.querySelector('textarea').value = '';
+      const comments = loadComments();
+      delete comments[id];
+      saveComments(comments);
+      updateTrigger(trigger);
+      updateFab();
+    });
+
+    updateTrigger(trigger);
+  });
+
+  // FAB
+  document.getElementById('comments-fab').addEventListener('click', openPanel);
+
+  // Panel close
+  document.getElementById('panel-close').addEventListener('click', closePanel);
+
+  // Panel export
+  document.getElementById('btn-export-json').addEventListener('click', exportJSON);
+
+  // Panel clear all
+  document.getElementById('btn-clear-all').addEventListener('click', clearAll);
+
+  updateFab();
+
+
+
+
+function copySchema() {
+  // Extract only the JSON between the script tags — strip the wrapper
+  var el = document.querySelector('.schema-block');
+  var raw = el.innerHTML
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&amp;/g, '&')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'");
+
+  // Remove the <script type="application/ld+json"> wrapper and <\/script> — copy only the JSON
+  raw = raw.replace(/<script[^>]*>/i, '').replace(/<\/script>/i, '').trim();
+
+  var lbl = document.getElementById('copy-label');
+  var icn = document.getElementById('copy-icon');
+  var btn = document.getElementById('copy-schema-btn');
+
+  function ok() {
+    btn.classList.add('copied');
+    lbl.textContent = 'Copied!';
+    icn.textContent = '✓';
+    setTimeout(function() {
+      btn.classList.remove('copied');
+      lbl.textContent = 'Copy Schema';
+      icn.textContent = '⧉';
+    }, 2500);
+  }
+  function fail() {
+    lbl.textContent = 'Select text manually';
+    setTimeout(function() { lbl.textContent = 'Copy Schema'; }, 3000);
+  }
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(raw).then(ok).catch(function() {
+      var t = document.createElement('textarea');
+      t.value = raw; t.style.cssText = 'position:fixed;opacity:0';
+      document.body.appendChild(t); t.select();
+      try { document.execCommand('copy'); ok(); } catch(e) { fail(); }
+      document.body.removeChild(t);
+    });
+  } else {
+    var t = document.createElement('textarea');
+    t.value = raw; t.style.cssText = 'position:fixed;opacity:0';
+    document.body.appendChild(t); t.select();
+    try { document.execCommand('copy'); ok(); } catch(e) { fail(); }
+    document.body.removeChild(t);
+  }
+}
+});
+
+// ── COPY SCHEMA — reads from hidden store to avoid <\/script> parsing issues ──
+function copySchema() {
+  var store = document.getElementById('schema-json-store');
+  if (!store) { alert('Schema store not found'); return; }
+  // textContent gives us the decoded plain text JSON
+  var raw = store.textContent || store.innerText;
+
+  var lbl = document.getElementById('copy-label');
+  var icn = document.getElementById('copy-icon');
+  var btn = document.getElementById('copy-schema-btn');
+
+  function ok() {
+    btn.classList.add('copied'); lbl.textContent = 'Copied!'; icn.textContent = '\u2713';
+    setTimeout(function() {
+      btn.classList.remove('copied'); lbl.textContent = 'Copy Schema'; icn.textContent = '\u2389';
+    }, 2500);
+  }
+  function fail() {
+    lbl.textContent = 'Select text manually';
+    setTimeout(function() { lbl.textContent = 'Copy Schema'; }, 3000);
+  }
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(raw).then(ok).catch(function() {
+      var t = document.createElement('textarea');
+      t.value = raw; t.style.cssText = 'position:fixed;opacity:0;top:0;left:0';
+      document.body.appendChild(t); t.focus(); t.select();
+      try { document.execCommand('copy'); ok(); } catch(e) { fail(); }
+      document.body.removeChild(t);
+    });
+  } else {
+    var t = document.createElement('textarea');
+    t.value = raw; t.style.cssText = 'position:fixed;opacity:0;top:0;left:0';
+    document.body.appendChild(t); t.focus(); t.select();
+    try { document.execCommand('copy'); ok(); } catch(e) { fail(); }
+    document.body.removeChild(t);
+  }
+}
+</script>
+
+<!-- COMMENT PANEL -->
+<div class="comments-panel" id="comments-panel">
+  <div class="panel-header">
+    <button class="panel-close" id="panel-close">&#x2715;</button>
+    <div class="panel-title">Client Comments</div>
+    <div class="panel-sub">All notes saved automatically in browser</div>
+  </div>
+  <div class="panel-body" id="panel-body"></div>
+  <div class="panel-footer">
+    <button class="panel-export-btn btn-export-json" id="btn-export-json">Export JSON</button>
+    <button class="panel-export-btn btn-clear-all" id="btn-clear-all">Clear All</button>
+  </div>
+</div>
+
+<!-- FAB -->
+<button class="comments-fab" id="comments-fab">
+  Comments <span class="fab-count" style="display:none" id="fab-count">0</span>
+</button>
+</body>
+</html>
